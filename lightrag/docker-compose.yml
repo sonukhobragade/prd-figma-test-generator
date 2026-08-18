@@ -1,0 +1,27 @@
+version: '3.8'
+
+# Simple Qdrant-only setup for Test Intelligence
+# No complex dependencies - just persistent vector storage
+
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.11.0
+    container_name: qdrant
+    ports:
+      - "6333:6333"   # REST API
+      - "6334:6334"   # gRPC
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+      - QDRANT__LOG_LEVEL=INFO
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:6333/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  qdrant_storage:
+    driver: local

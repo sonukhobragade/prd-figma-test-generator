@@ -1,0 +1,30 @@
+pytest==7.4.3
+pytest-cov==4.1.0
+allure-pytest==2.13.2
+pytest-html==4.1.1
+pytest-xdist==3.5.0
+python-dotenv==1.0.0
+Pillow>=10.3.0
+PyYAML==6.0.1
+ruff==0.13.2  # pinned: an unpinned linter turns a new ruff release into a red CI
+mypy>=1.0.0
+requests>=2.32.0
+pydantic>=2.0.0
+click>=8.0.0
+anthropic>=0.18.0  # OverloadedError is optional; see framework/llm_analyzer.py
+openai>=1.0.0
+fastapi>=0.100.0
+uvicorn>=0.23.0
+python-multipart>=0.0.6
+ag-ui-protocol>=0.1.9
+sse-starlette>=3.0.2
+pypdf>=6.0.0
+
+# RAG Dependencies
+qdrant-client>=1.7.0
+numpy>=1.24.0
+# sentence-transformers>=2.2.0  # Uncomment for local embeddings (optional)
+
+# ZK-Web Client Dependencies
+beautifulsoup4>=4.12.0
+httpx>=0.25.0
