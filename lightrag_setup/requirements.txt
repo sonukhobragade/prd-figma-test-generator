@@ -1,0 +1,32 @@
+# LightRAG + Qdrant Setup for Test Intelligence
+# =============================================
+
+# Core LightRAG
+lightrag-hku>=1.0.0
+
+# Vector Database
+qdrant-client>=1.7.0
+
+# LLM Providers
+anthropic>=0.18.0
+openai>=1.12.0
+
+# Embeddings (choose one)
+# Option 1: OpenAI embeddings (recommended, requires OPENAI_API_KEY)
+# Option 2: Local embeddings with sentence-transformers
+sentence-transformers>=2.2.0
+
+# Document Processing
+pypdf>=3.17.0
+python-docx>=1.1.0
+markdown>=3.5.0
+
+# Utilities
+python-dotenv>=1.0.0
+rich>=13.7.0
+typer>=0.9.0
+pydantic>=2.5.0
+
+# Code parsing
+tree-sitter>=0.20.0
+tree-sitter-languages>=1.8.0

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # Qdrant Vector Database - Persistent Storage
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: lightrag-qdrant
+    ports:
+      - "6335:6333"  # REST API (using 6335 to avoid conflict)
+      - "6336:6334"  # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  qdrant_data:
+    driver: local
