@@ -11,6 +11,22 @@ It is not a "generate tests from code" tool. It reads the specification, which
 is where the requirements actually live, and where the gaps that cause escaped
 defects actually are.
 
+## What it produces
+
+A CSV that drops into a test management tool, one row per case:
+
+```
+Test Case ID, Priority, Category, User Type, Screen Reference, Precondition,
+Test Scenario, Steps to Execute, Expected Result, Dev Status, QA Status, Comments
+```
+
+```
+TC_UI_POS_001_7A3E   P0   Happy Path   Verify that valid credentials are accepted
+```
+
+The column set is configurable in `framework/prompts/test_case_prompt.py` —
+match your team's taxonomy there and the output needs no reshaping.
+
 ## Why the Figma input matters
 
 A PRD tells you the rules. The design tells you the states. Most missed test
@@ -62,9 +78,8 @@ generic LLM phrasing.
 
 ## The example domain
 
-The prompts and knowledge base ship configured for a fictional app called
-a consultation marketplace with subscriptions, a wallet,
-provider chat and payments.
+The prompts and knowledge base ship configured for a fictional consultation
+marketplace with subscriptions, a wallet, provider chat and payments.
 
 **This is a worked example, not a framework constraint.** It is filled in
 because an empty prompt template teaches you nothing about the level of detail
@@ -116,7 +131,20 @@ and `framework/zk_config_parser.py` turns it into testable conditions.
 
 ## RAG backends
 
-Two, because they suit different sizes:
+Retrieval runs over a Qdrant vector store. Embeddings come from a swappable
+provider, so the pipeline runs hosted or entirely on your own machine:
+
+| Provider | Model | Dimensions |
+|---|---|---|
+| `openai` | `text-embedding-3-small` | 1536 |
+| `openai-large` | `text-embedding-3-large` | 3072 |
+| `local` | `all-MiniLM-L6-v2` | 384 |
+
+Generation goes to Anthropic or OpenAI. With `local` embeddings and a local
+model, no document leaves your machine — which matters, because the input here
+is unreleased product specification.
+
+Two retrieval setups ship, because they suit different sizes:
 
 - `rag/simple_rag.py` for a modest knowledge base, no external services.
 - `lightrag_setup/` for indexing a whole codebase alongside the docs, via Docker.
