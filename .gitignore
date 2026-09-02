@@ -12,7 +12,7 @@
 Thumbs.db
 
 # ============================================
-# Claude Code (Local Only)
+# Local editor/assistant state
 # ============================================
 .claude/
 *.log
@@ -254,5 +254,5 @@ docs/**/*.pdf
 frontend/static/
 frontend/dist/
 
-# Local Claude Code MCP server config; may contain API tokens
+# Local editor/assistant config; may contain API tokens
 .mcp.json
